@@ -1,0 +1,317 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access control",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "admin", "manager", "owner"] },
+        "phone": { "type": "string" },
+        "birthDate": { "type": "string" },
+        "isAgeVerified": { "type": "boolean" },
+        "savedAddresses": { "type": "array" },
+        "totalOrders": { "type": "number" },
+        "totalSpent": { "type": "number" },
+        "accountStatus": { "type": "string", "enum": ["active", "suspended", "vip"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Liquor and beverage catalog item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "brand": { "type": "string" },
+        "category": { "type": "string" },
+        "sku": { "type": "string" },
+        "volume": { "type": "string" },
+        "alcoholPercentage": { "type": "number" },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "stock": { "type": "number" },
+        "lowStockThreshold": { "type": "number" },
+        "description": { "type": "string" },
+        "tastingNotes": { "type": "string" },
+        "origin": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "gallery": { "type": "array" },
+        "isFeatured": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "isBestSeller": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "brand", "category", "price", "stock", "isActive"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category specification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "displayOrder": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "Brand": {
+      "title": "Brand",
+      "description": "Beverage producer or maison brand",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "country": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "name"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase transaction and fulfillment record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "discountTotal": { "type": "number" },
+        "total": { "type": "number" },
+        "couponCode": { "type": "string" },
+        "deliveryMethod": { "type": "string", "enum": ["delivery", "pickup"] },
+        "shippingAddress": { "type": "object" },
+        "customerNotes": { "type": "string" },
+        "ageVerifiedAtCheckout": { "type": "boolean" },
+        "paymentStatus": { "type": "string", "enum": ["pending", "paid", "failed", "refunded"] },
+        "paymentMethod": { "type": "string" },
+        "orderStatus": { "type": "string", "enum": ["order_received", "order_confirmed", "preparing", "ready_for_pickup", "out_for_delivery", "delivered", "cancelled"] },
+        "estimatedDelivery": { "type": "string" },
+        "trackingNumber": { "type": "string" },
+        "timeline": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "customerEmail", "customerName", "items", "total", "orderStatus", "paymentStatus", "ageVerifiedAtCheckout"]
+    },
+    "InventoryHistory": {
+      "title": "InventoryHistory",
+      "description": "Audit log record for inventory changes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "sku": { "type": "string" },
+        "previousQuantity": { "type": "number" },
+        "newQuantity": { "type": "number" },
+        "changeDelta": { "type": "number" },
+        "reason": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "productId", "previousQuantity", "newQuantity", "changeDelta", "reason"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Promotional discount codes and campaigns",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "discountType": { "type": "string", "enum": ["percentage", "fixed"] },
+        "discountAmount": { "type": "number" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "usageLimit": { "type": "number" },
+        "usedCount": { "type": "number" },
+        "minOrderAmount": { "type": "number" },
+        "applicableCategory": { "type": "string" },
+        "applicableProductId": { "type": "string" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "code", "discountType", "discountAmount", "isActive"]
+    },
+    "DeliveryZone": {
+      "title": "DeliveryZone",
+      "description": "Delivery zones and fee schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "fee": { "type": "number" },
+        "minOrder": { "type": "number" },
+        "estimatedTime": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "allowPickup": { "type": "boolean" }
+      },
+      "required": ["id", "name", "fee", "isActive"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer tasting feedback and ratings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "rating": { "type": "number" },
+        "title": { "type": "string" },
+        "comment": { "type": "string" },
+        "status": { "type": "string", "enum": ["approved", "pending", "hidden"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "productId", "rating", "comment", "status"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Global store configuration and website content control",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "storeName": { "type": "string" },
+        "storeDescription": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "openingHours": { "type": "string" },
+        "currency": { "type": "string" },
+        "taxRate": { "type": "number" },
+        "freeShippingThreshold": { "type": "number" },
+        "minAge": { "type": "number" },
+        "heroHeadline": { "type": "string" },
+        "heroSubheadline": { "type": "string" },
+        "heroBadge": { "type": "string" },
+        "heroImageUrl": { "type": "string" },
+        "heroCtaText": { "type": "string" },
+        "announcementBanner": { "type": "string" },
+        "showAnnouncementBanner": { "type": "boolean" },
+        "instagramUrl": { "type": "string" },
+        "twitterUrl": { "type": "string" },
+        "facebookUrl": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "storeName"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Administrative users with role-based permissions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["owner", "admin", "manager"] },
+        "status": { "type": "string", "enum": ["active", "disabled"] },
+        "lastLogin": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role", "status"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable operational log for critical admin actions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "affectedItem": { "type": "string" },
+        "previousValue": { "type": "string" },
+        "newValue": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "adminEmail", "action", "affectedItem", "timestamp"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Real-time administrative alerts",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["order", "low_stock", "out_of_stock", "customer", "review"] },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "referenceId": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "type", "title", "message", "isRead", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile with role-based attributes and saved addresses"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Public beverage product catalog"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Beverage category taxonomy"
+    },
+    "/brands/{brandId}": {
+      "schema": "Brand",
+      "description": "Distillery and brand profiles"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders and fulfillment status"
+    },
+    "/inventoryHistory/{historyId}": {
+      "schema": "InventoryHistory",
+      "description": "Audited inventory modifications"
+    },
+    "/coupons/{couponId}": {
+      "schema": "Coupon",
+      "description": "Promotional discounts and coupons"
+    },
+    "/deliveryZones/{zoneId}": {
+      "schema": "DeliveryZone",
+      "description": "Delivery zones and fee configuration"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Product tasting and customer feedback reviews"
+    },
+    "/settings/{docId}": {
+      "schema": "StoreSettings",
+      "description": "Store configuration and live content controls"
+    },
+    "/adminUsers/{adminId}": {
+      "schema": "AdminUser",
+      "description": "Administrative role assignments"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "System operational audit trail"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Admin operational notifications"
+    }
+  }
+}

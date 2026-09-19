@@ -1,0 +1,7 @@
+{
+  "name": "Pazion Liquor Store",
+  "description": "Modern luxury e-commerce experience for premium spirits, fine wines, and artisanal beverages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
